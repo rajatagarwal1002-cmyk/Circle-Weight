@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pipe Weight Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 360px;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: left;
+    }
+    input {
+      width: 95%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .results {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .result-box {
+      width: 48%;
+      padding: 10px;
+      border-radius: 10px;
+      background: #f0fdf4;
+      color: green;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Pipe Weight Calculator</h2>
+    
+    <label for="od">OD:</label>
+    <input type="number" id="od" step="any" placeholder="Enter OD">
+    
+    <label for="thickness">Thickness:</label>
+    <input type="number" id="thickness" step="any" placeholder="Enter Thickness">
+    
+    <label for="rate">Rate:</label>
+    <input type="number" id="rate" step="any" min="0" placeholder="Enter Rate">
+    
+    <div class="results">
+      <div class="result-box" id="weight">Weight: 0</div>
+      <div class="result-box" id="final">Final: 0</div>
+    </div>
+  </div>
+
+  <script>
+    const odInput = document.getElementById("od");
+    const thicknessInput = document.getElementById("thickness");
+    const rateInput = document.getElementById("rate");
+    const weightDiv = document.getElementById("weight");
+    const finalDiv = document.getElementById("final");
+
+    function calculate() {
+      const od = parseFloat(odInput.value) || 0;
+      const thickness = parseFloat(thicknessInput.value) || 0;
+      const rate = parseFloat(rateInput.value) || 0;
+
+      const factor = 0.00000625; // fixed hidden constant
+      const weight = od * od * thickness * factor;
+      const finalResult = weight * rate;
+
+      weightDiv.textContent = "Weight: " + weight.toFixed(2);
+      finalDiv.textContent = "Final: " + finalResult.toFixed(2);
+    }
+
+    // Auto-update on every input change
+    [odInput, thicknessInput, rateInput].forEach(input =>
+      input.addEventListener("input", calculate)
+    );
+  </script>
+</body>
+</html>
